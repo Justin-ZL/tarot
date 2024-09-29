@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tarot Reading Result</title>
+    <style>
+        body {
+            background: url('https://minio.ol.deepwisdomai.com/test/tarot/tarot-通用-背景.png') no-repeat center center fixed;
+            background-size: cover;
+            font-family: Arial, sans-serif;
+            color: white;
+            text-align: center;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 10px;
+        }
+        .header img {
+            height: 50px;
+            margin-left: 10px;
+        }
+        .main-content {
+            margin-top: 50px;
+        }
+        .card-result {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .card-result img {
+            width: 100px;
+            height: 150px;
+            margin: 5px;
+        }
+        .card-name {
+            font-size: 18px;
+            margin-top: 10px;
+        }
+        .short-interpretation {
+            margin-bottom: 20px;
+        }
+        .detailed-interpretation {
+            text-align: left;
+            margin: 0 auto;
+            width: 80%;
+        }
+        .detailed-interpretation h3 {
+            margin-top: 20px;
+        }
+        .again-button {
+            background-color: white;
+            color: black;
+            border: none;
+            border-radius: 5px;
+            padding: 15px 30px;
+            margin-top: 20px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .again-button:hover {
+            background-color: #ddd;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <span>Made by</span>
+        <img src="https://minio.ol.deepwisdomai.com/test/tarot/MetaGPTX-LOGO.png" alt="MetaGPT X Logo">
+    </div>
+    <div class="main-content">
+        <h1>Ask the Tarot</h1>
+        <div class="card-result">
+            <div>
+                <img src="https://minio.external.metadl.com/test/tarot/front/愚者.png" alt="愚者">
+                <div class="card-name">愚者</div>
+            </div>
+            <div>
+                <img src="https://minio.external.metadl.com/test/tarot/front/魔术师.png" alt="魔术师">
+                <div class="card-name">魔术师</div>
+            </div>
+            <div>
+                <img src="https://minio.external.metadl.com/test/tarot/front/女祭司.png" alt="女祭司">
+                <div class="card-name">女祭司</div>
+            </div>
+        </div>
+        <div class="short-interpretation">
+            <p>简短解读：这三张牌的组合表明你正处于一个重要的转折点，过去的经验将帮助你面对未来的挑战。</p>
+        </div>
+        <div class="detailed-interpretation">
+            <h3>愚者</h3>
+            <p>愚者代表新的开始和冒险精神。这张牌鼓励你勇敢地追求你的梦想，不要害怕未知的旅程。</p>
+            <h3>魔术师</h3>
+            <p>魔术师象征着创造力和技能。这张牌表明你有能力将你的想法变为现实，利用你的资源和才能。</p>
+            <h3>女祭司</h3>
+            <p>女祭司代表直觉和内在的智慧。这张牌提醒你要倾听你的内心声音，相信你的直觉来做出决定。</p>
+        </div>
+        <button class="again-button" onclick="restartReading()">Again</button>
+    </div>
+
+    <script>
+        function restartReading() {
+            window.location.href = 'index.html';
+        }
+
+        function getQueryParams() {
+            const params = new URLSearchParams(window.location.search);
+            return {
+                card1: params.get('card1'),
+                card2: params.get('card2'),
+                card3: params.get('card3')
+            };
+        }
+
+        function displayCards() {
+            const cards = getQueryParams();
+            const baseUrl = 'https://minio.external.metadl.com/test/tarot/front/';
+            const cardResult = document.querySelector('.card-result');
+            cardResult.innerHTML = `
+                <div>
+                    <img src="${baseUrl}${cards.card1}.png" alt="${cards.card1}">
+                    <div class="card-name">${cards.card1}</div>
+                </div>
+                <div>
+                    <img src="${baseUrl}${cards.card2}.png" alt="${cards.card2}">
+                    <div class="card-name">${cards.card2}</div>
+                </div>
+                <div>
+                    <img src="${baseUrl}${cards.card3}.png" alt="${cards.card3}">
+                    <div class="card-name">${cards.card3}</div>
+                </div>
+            `;
+        }
+
+        displayCards();
+
+        function getInterpretation(card) {
+            const interpretations = {
+                '愚者': '愚者代表新的开始和冒险精神。这张牌鼓励你勇敢地追求你的梦想，不要害怕未知的旅程。',
+                '魔术师': '魔术师象征着创造力和技能。这张牌表明你有能力将你的想法变为现实，利用你的资源和才能。',
+                '女祭司': '女祭司代表直觉和内在的智慧。这张牌提醒你要倾听你的内心声音，相信你的直觉来做出决定。',
+                '女皇': '女皇象征着母性和丰饶。这张牌鼓励你关注自己的情感和直觉，同时也要关注他人的需求。',
+                '皇帝': '皇帝象征着权威和结构。这张牌提醒你要在决策中保持理性和坚定，同时也要关注秩序和稳定。',
+                '教皇': '教皇象征着信仰和传统。这张牌鼓励你寻求指导和智慧，同时也要尊重传统和信仰。',
+                '恋人': '恋人象征着爱情和选择。这张牌提醒你要在关系中保持真诚和信任，同时也要做出明智的选择。',
+                '战车': '战车象征着意志和行动。这张牌鼓励你坚定目标，勇敢前进，克服困难。',
+                '力量': '力量象征着勇气和控制。这张牌提醒你要在面对挑战时保持冷静和自信，同时也要控制自己的情绪。',
+                '隐士': '隐士象征着内省和智慧。这张牌鼓励你寻求内心的平静和智慧，同时也要关注自我成长。',
+                '命运之轮': '命运之轮象征着变化和命运。这张牌提醒你要接受生活中的变化，同时也要把握机会。',
+                '正义': '正义象征着公平和平衡。这张牌提醒你要在决策中保持公正和平衡，同时也要关注道德和法律。',
+                '倒吊人': '倒吊人象征着牺牲和洞察。这张牌鼓励你从不同的角度看待问题，同时也要接受必要的牺牲。',
+                '死神': '死神象征着结束和转变。这张牌提醒你要接受生活中的结束和转变，同时也要迎接新的开始。',
+                '节制': '节制象征着平衡和和谐。这张牌鼓励你在生活中保持平衡和和谐，同时也要关注自我控制。',
+                '恶魔': '恶魔象征着诱惑和束缚。这张牌提醒你要警惕诱惑和束缚，同时也要寻求解脱。',
+                '塔': '塔象征着突变和觉醒。这张牌提醒你要接受突变和觉醒，同时也要寻求新的方向。',
+                '星星': '星星象征着希望和灵感。这张牌鼓励你保持希望和灵感，同时也要关注内心的指引。',
+                '月亮': '月亮象征着潜意识和情感。这张牌提醒你要关注潜意识和情感，同时也要寻求内心的平衡。',
+                '太阳': '太阳象征着光明和成功。这张牌鼓励你保持积极和乐观，同时也要享受成功和成就。',
+                '审判': '审判象征着反思和重生。这张牌提醒你要反思过去，同时也要迎接新的开始。',
+                '世界': '世界象征着完成和成就。这张牌鼓励你庆祝完成和成就，同时也要关注未来的目标。'
+            };
+            return interpretations[card] || '未知的卡牌';
+        }
+
+        function displayInterpretations() {
+            const cards = getQueryParams();
+            const shortInterpretation = document.querySelector('.short-interpretation');
+            const detailedInterpretation = document.querySelector('.detailed-interpretation');
+            shortInterpretation.innerHTML = `<p>简短解读：这三张牌的组合表明你正处于一个重要的转折点，过去的经验将帮助你面对未来的挑战。</p>`;
+            detailedInterpretation.innerHTML = `
+                <h3>${cards.card1}</h3>
+                <p>${getInterpretation(cards.card1)}</p>
+                <h3>${cards.card2}</h3>
+                <p>${getInterpretation(cards.card2)}</p>
+                <h3>${cards.card3}</h3>
+                <p>${getInterpretation(cards.card3)}</p>
+            `;
+            detailedInterpretation.innerHTML = `
+                <h3>${cards.card1}</h3>
+                <p>${getInterpretation(cards.card1)}</p>
+                <h3>${cards.card2}</h3>
+                <p>${getInterpretation(cards.card2)}</p>
+                <h3>${cards.card3}</h3>
+                <p>${getInterpretation(cards.card3)}</p>
+            `;
+            detailedInterpretation.innerHTML = `
+                <h3>${cards.card1}</h3>
+                <p>${getInterpretation(cards.card1)}</p>
+                <h3>${cards.card2}</h3>
+                <p>${getInterpretation(cards.card2)}</p>
+                <h3>${cards.card3}</h3>
+                <p>${getInterpretation(cards.card3)}</p>
+            `;
+        }
+
+        displayInterpretations();
+    </script>
+    </script>
+</body>
+</html>

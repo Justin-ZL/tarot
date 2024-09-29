@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tarot Card Drawing</title>
+    <style>
+        body {
+            background: url('https://minio.ol.deepwisdomai.com/test/tarot/tarot-通用-背景.png') no-repeat center center fixed;
+            background-size: cover;
+            font-family: Arial, sans-serif;
+            color: white;
+            text-align: center;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 10px;
+        }
+        .header img {
+            height: 50px;
+            margin-left: 10px;
+        }
+        .main-content {
+            margin-top: 50px;
+        }
+        .instructions {
+            margin-bottom: 20px;
+        }
+        .card-deck {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+        .card {
+            width: 100px;
+            height: 150px;
+            margin: 5px;
+            background: url('https://minio.ol.deepwisdomai.com/test/tarot/tarot-backend.jpg') no-repeat center center;
+            background-size: cover;
+            cursor: pointer;
+        }
+        .shuffle-button {
+            background-color: white;
+            color: black;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+        .result-area {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .result-box {
+            width: 100px;
+            height: 150px;
+            margin: 5px;
+            background-color: rgba(255, 255, 255, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+        .result-box img {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <span>Made by</span>
+        <img src="https://minio.ol.deepwisdomai.com/test/tarot/MetaGPTX-LOGO.png" alt="MetaGPT X Logo">
+    </div>
+    <div class="main-content">
+        <h1>Ask the Tarot</h1>
+        <div class="instructions">
+            <p>"Before drawing the cards, you need to focus and think about a very precise question. Then you should choose 3 cards from the deck below."</p>
+            <p>"Our free tarot reading will give you a unique insight into your future and allow you to face it with more serenity."</p>
+        </div>
+        <div class="card-deck" id="cardDeck">
+            <!-- Cards will be dynamically added here -->
+        </div>
+        <button class="shuffle-button" onclick="shuffleCards()">Shuffle</button>
+        <div class="result-area">
+            <div class="result-box" id="pastBox">+</div>
+            <div class="result-box" id="presentBox">+</div>
+            <div class="result-box" id="futureBox">+</div>
+        </div>
+    </div>
+
+    <script>
+        const cardNames = [
+            "愚者", "魔术师", "女祭司", "女皇", "皇帝", "教皇", "恋人", "战车", "力量", "隐士",
+            "命运之轮", "正义", "倒吊人", "死神", "节制", "恶魔", "塔", "星星", "月亮", "太阳", "审判", "世界"
+        ];
+        const baseUrl = "https://minio.external.metadl.com/test/tarot/front/";
+        let selectedCards = [];
+
+        function createCard(name) {
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.setAttribute('data-name', name);
+            card.addEventListener('click', selectCard);
+            return card;
+        }
+
+        function shuffleCards() {
+            const cardDeck = document.getElementById('cardDeck');
+            cardDeck.innerHTML = '';
+            cardNames.sort(() => Math.random() - 0.5);
+            cardNames.forEach(name => {
+                cardDeck.appendChild(createCard(name));
+            });
+        }
+
+        function selectCard(event) {
+            const cardName = event.target.getAttribute('data-name');
+            if (selectedCards.length < 3 && !selectedCards.includes(cardName)) {
+                selectedCards.push(cardName);
+                updateResultBoxes();
+                if (selectedCards.length === 3) {
+                    const queryParams = selectedCards.map((card, index) => `card${index + 1}=${card}`).join('&');
+                    window.location.href = `result.html?${queryParams}`;
+
+                }
+            }
+        }
+
+        function updateResultBoxes() {
+            const boxes = ['pastBox', 'presentBox', 'futureBox'];
+            boxes.forEach((boxId, index) => {
+                const box = document.getElementById(boxId);
+                if (selectedCards[index]) {
+                    box.innerHTML = `<img src="${baseUrl}${selectedCards[index]}.png" alt="${selectedCards[index]}">`;
+                } else {
+                    box.textContent = '+';
+                }
+            });
+        }
+
+        shuffleCards();
+    </script>
+</body>
+</html>

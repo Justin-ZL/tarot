@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tarot Reading</title>
+    <style>
+        body {
+            background: url('https://minio.ol.deepwisdomai.com/test/tarot/tarot-通用-背景.png') no-repeat center center fixed;
+            background-size: cover;
+            font-family: Arial, sans-serif;
+            color: white;
+            text-align: center;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 10px;
+        }
+        .header img {
+            height: 50px;
+            margin-left: 10px;
+        }
+        .main-content {
+            margin-top: 50px;
+        }
+        .main-content img {
+            width: 300px;
+            margin-bottom: 20px;
+        }
+        .buttons-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .button {
+            background-color: #444;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            margin: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .button:hover {
+            background-color: #666;
+        }
+        .button.selected {
+            background-color: #888;
+        }
+        .start-button {
+            background-color: #ff6347;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 15px 30px;
+            margin-top: 20px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .start-button:hover {
+            background-color: #ff4500;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <span>Made by</span>
+        <img src="https://minio.ol.deepwisdomai.com/test/tarot/MetaGPTX-LOGO.png" alt="MetaGPT X Logo">
+    </div>
+    <div class="main-content">
+        <img src="https://minio.ol.deepwisdomai.com/test/tarot/tarot-1-选占卜方向-塔罗牌插画.png" alt="Tarot Illustration">
+        <h1>Ask the Tarot</h1>
+        <h2>Give you hints for the future</h2>
+        <div class="buttons-container">
+            <button class="button" data-theme="Love">Love</button>
+            <button class="button" data-theme="Relationships">Relationships</button>
+            <button class="button" data-theme="Career">Career</button>
+            <button class="button" data-theme="Fortune">Fortune</button>
+            <button class="button" data-theme="Security">Security</button>
+            <button class="button" data-theme="Personal Growth">Personal Growth</button>
+            <button class="button" data-theme="Legal Matters">Legal Matters</button>
+            <button class="button" data-theme="Health">Health</button>
+        </div>
+        <button class="start-button" onclick="startReading()">Start</button>
+    </div>
+
+    <script>
+        let selectedTheme = null;
+
+        function selectTheme(event) {
+            const buttons = document.querySelectorAll('.button');
+            buttons.forEach(button => button.classList.remove('selected'));
+            event.target.classList.add('selected');
+            selectedTheme = event.target.getAttribute('data-theme');
+        }
+
+        function startReading() {
+            if (selectedTheme) {
+                window.location.href = 'draw.html';
+            } else {
+                alert('Please select a theme before starting.');
+            }
+        }
+
+        document.querySelectorAll('.button').forEach(button => {
+            button.addEventListener('click', selectTheme);
+        });
+    </script>
+</body>
+</html>
